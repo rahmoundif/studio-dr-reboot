@@ -1,12 +1,17 @@
+"use client";
 
-import Header from './_components/Header';
-import Footer from './_components/Footer';
 import Script from "next/script";
+import Footer from "./_components/Footer";
+import Header from "./_components/Header";
 
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
+export default function PublicLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
-      <Script 
+      <Script
         src="https://challenges.cloudflare.com/turnstile/v0/api.js"
         strategy="afterInteractive"
       />

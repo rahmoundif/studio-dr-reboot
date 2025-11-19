@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/client";
-import { SectionWorkSkeleton } from "./../_skeletons/SectionWorkSkeleton";
 import type { Details } from "@/types/public";
+import { SectionWorkSkeleton } from "../../../components/skeletons/SectionWorkSkeleton";
 
 export default function SectionWork() {
   const [detail, setDetail] = useState<Details | null>(null);
@@ -12,7 +12,7 @@ export default function SectionWork() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const supabase = createClient(); 
+      const supabase = createClient();
 
       const { data, error } = await supabase
         .from("content_sections")
@@ -47,10 +47,8 @@ export default function SectionWork() {
       </h2>
 
       <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-        {lang === "fr" ? "":""}
+        {lang === "fr" ? "" : ""}
       </p>
     </section>
   );
 }
-
-

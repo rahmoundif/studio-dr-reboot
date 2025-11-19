@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { createClient} from "@/lib/client";
-import type {Offer} from "@/types/public"
-import { SectionOffersSkeleton } from "./../_skeletons/SectionOffersSkeleton";
+import { createClient } from "@/lib/client";
+import type { Offer } from "@/types/public";
+import { SectionOffersSkeleton } from "../../../components/skeletons/SectionOffersSkeleton";
 
 export default function SectionOffers() {
   const [offers, setOffers] = useState<Offer[]>([]);
@@ -13,7 +13,7 @@ export default function SectionOffers() {
 
   useEffect(() => {
     const fetchOffers = async () => {
-      const supabase = createClient(); 
+      const supabase = createClient();
 
       const { data, error } = await supabase
         .from("offers")
@@ -55,5 +55,3 @@ export default function SectionOffers() {
     </section>
   );
 }
-
-

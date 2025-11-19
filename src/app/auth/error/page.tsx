@@ -1,8 +1,7 @@
-
 import Link from "next/link";
 
 export default function AuthErrorPage() {
-  return ( 
+  return (
     <main title="Lien invalide ou expiré">
       <p className="text-gray-300 mb-4 text-center leading-relaxed">
         Le lien que vous avez utilisé n’est plus valide.

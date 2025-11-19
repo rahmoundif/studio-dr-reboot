@@ -13,8 +13,8 @@ export interface Offer {
 }
 
 export interface Team {
-  id?:string;
-  firstname?:string;
+  id?: string;
+  firstname?: string;
   lastname?: string;
   bio_fr?: string;
   bio_en?: string;
@@ -22,12 +22,12 @@ export interface Team {
 }
 
 export interface Details {
-  slug ?: string;
-  "notre-travail" ?: string;
+  slug?: string;
+  "notre-travail"?: string;
 }
 
 export interface Step {
-  id?:string;
+  id?: string;
   is_active?: boolean;
   step_number?: number;
 }

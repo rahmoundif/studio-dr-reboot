@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/client";
-import { SectionWorkflowSkeleton } from "./../_skeletons/SectionWorkFlowSkeleton";
 import type { Step } from "@/types/public";
+import { SectionWorkflowSkeleton } from "../../../components/skeletons/SectionWorkFlowSkeleton";
 
 export default function SectionWorkflow() {
   const [steps, setSteps] = useState<Step[]>([]);
@@ -12,7 +12,7 @@ export default function SectionWorkflow() {
 
   useEffect(() => {
     const fetchSteps = async () => {
-      const supabase = createClient(); 
+      const supabase = createClient();
 
       const { data, error } = await supabase
         .from("workflow_steps")
@@ -65,7 +65,7 @@ export default function SectionWorkflow() {
             <div className="h-1 w-10 bg-blue-500/60 rounded-full mb-4"></div>
 
             <p className="text-gray-700 leading-relaxed whitespace-pre-line">
-              {lang === "fr" ? "": ""}
+              {lang === "fr" ? "" : ""}
             </p>
           </div>
         ))}
@@ -73,5 +73,3 @@ export default function SectionWorkflow() {
     </section>
   );
 }
-
-

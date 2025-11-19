@@ -1,15 +1,14 @@
-import SectionWork from './_components/SectionWork';
-import SectionTeam from './_components/SectionTeam';
-import SectionOffers from './_components/SectionOffers';
-import SectionPricing from './_components/SectionPricing';
-import SectionWorkflow from './_components/SectionWorkFlow';
-import SectionContact from './_components/SectionContact';
-import BackToTop from './../../components/ui/backToTop';
+import BackToTop from "./../../components/ui/backToTop";
+import SectionContact from "./_components/SectionContact";
+import SectionOffers from "./_components/SectionOffers";
+import SectionPricing from "./_components/SectionPricing";
+import SectionTeam from "./_components/SectionTeam";
+import SectionWork from "./_components/SectionWork";
+import SectionWorkflow from "./_components/SectionWorkFlow";
 
 export default function HomePage() {
   return (
     <div className="space-y-16">
-      
       {/* SECTION 1 — Notre travail */}
       <section id="notre-travail" className="scroll-mt-24">
         <SectionWork />
@@ -37,11 +36,10 @@ export default function HomePage() {
 
       {/* SECTION 6 - Contact */}
       <section id="contact">
-       <SectionContact />
+        <SectionContact />
       </section>
 
-        <BackToTop />
-
+      <BackToTop />
     </div>
   );
 }

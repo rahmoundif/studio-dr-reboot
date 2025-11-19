@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
+import { updateUserStatusAfterLogin } from "@/actions/auth";
 // The client you created from the Server-Side Auth instructions
 import { createClient } from "@/lib/server";
-import { updateUserStatusAfterLogin } from "@/actions/auth";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);

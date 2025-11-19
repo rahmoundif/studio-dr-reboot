@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { createClient } from "@/lib/client";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 
 export default function Header() {
   const supabase = createClient();
@@ -30,37 +30,26 @@ export default function Header() {
   }, [supabase]);
 
   return (
-    <header
-      className="
-        sticky top-0 z-50
-        backdrop-blur-md bg-white/80 
-        border-b border-gray-200
-        supports-backdrop-filter:bg-white/70
-      "
-    >
+    <header className="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-gray-200 supports-backdrop-filter:bg-white/70">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-
         {/* LOGO / NOM DU SITE */}
 
         <div className="flex items-center">
-
           {logoUrl && logoUrl.trim() !== "" ? (
             <Image
               src={logoUrl}
               alt="Logo"
               className="h-10 w-auto object-contain select-none"
             />
-          ) : 
-            siteName ? (
-              <span className="text-xl font-semibold text-gray-900 tracking-tight select-none">
-                {siteName}
-              </span>
-
-            ) : (
-                <span className="text-xl font-semibold text-gray-900 tracking-tight select-none">
-                  Studio DR
-                </span>
-              )}
+          ) : siteName ? (
+            <span className="text-xl font-semibold text-gray-900 tracking-tight select-none">
+              {siteName}
+            </span>
+          ) : (
+            <span className="text-xl font-semibold text-gray-900 tracking-tight select-none">
+              Studio DR
+            </span>
+          )}
         </div>
 
         {/* NAVBAR */}

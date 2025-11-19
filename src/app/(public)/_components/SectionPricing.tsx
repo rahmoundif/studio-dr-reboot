@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/client";
-import type {Offer} from "./../../../types/public"
-import { SectionPricingSkeleton } from "./../_skeletons/SectionPricingSkeleton";
-
+import { SectionPricingSkeleton } from "../../../components/skeletons/SectionPricingSkeleton";
+import type { Offer } from "./../../../types/public";
 
 export default function SectionPricing() {
   const [offers, setOffers] = useState<Offer[]>([]);
@@ -13,7 +12,7 @@ export default function SectionPricing() {
 
   useEffect(() => {
     const fetchOffers = async () => {
-      const supabase = createClient(); 
+      const supabase = createClient();
 
       const { data, error } = await supabase
         .from("offers")
@@ -61,5 +60,3 @@ export default function SectionPricing() {
     </section>
   );
 }
-
-
