@@ -16,8 +16,7 @@ export interface Team {
   id?: string;
   firstname?: string;
   lastname?: string;
-  bio_fr?: string;
-  bio_en?: string;
+  bio?: string;
   avatar_url?: string;
 }
 
@@ -30,4 +29,13 @@ export interface Step {
   id?: string;
   is_active?: boolean;
   step_number?: number;
+}
+
+export interface UserType{
+user: string | null;
+}
+
+export interface providerType { 
+provider: "github" | "google" | "discord";
+className?: string
 }

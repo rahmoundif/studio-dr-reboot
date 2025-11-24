@@ -9,7 +9,6 @@ import { SectionTeamSkeleton } from "../../../components/skeletons/SectionTeamSk
 export default function SectionTeam() {
   const [team, setTeam] = useState<Team[]>([]);
   const [loading, setLoading] = useState(true);
-  const lang = "fr";
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -17,8 +16,9 @@ export default function SectionTeam() {
 
       const { data, error } = await supabase
         .from("users")
-        .select("id, firstname, lastname, bio_fr, bio_en, avatar_url")
-        .eq("is_public", true);
+        .select("id, firstname, lastname, bio, avatar_url")
+        .eq("is_public", true)
+        .eq("is_approved", true);
 
       if (!error) setTeam(data || []);
       setLoading(false);
@@ -53,9 +53,11 @@ export default function SectionTeam() {
               {u.firstname} {u.lastname}
             </h3>
 
-            <p className="text-sm text-gray-600 mt-2 leading-relaxed">
-              {lang === "fr" ? u.bio_fr : u.bio_en}
-            </p>
+            {u.bio && (
+              <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                {u.bio}
+              </p>
+            )}
           </div>
         ))}
       </div>

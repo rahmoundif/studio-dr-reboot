@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
-import { LogoutButton } from "@/app/auth/_components/logout-button";
-import { createClient } from "@/lib/server";
+import { LogoutButton } from "@/app/auth/_components/_buttons/signOut";
+import { createClient } from "@/lib/client";
 
 export default async function DashboardPage() {
-  const supabase = await createClient();
+  const supabase = createClient();
 
   const {
     data: { user },

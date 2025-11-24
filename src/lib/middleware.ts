@@ -8,11 +8,11 @@ export async function updateSession(request: NextRequest) {
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey =
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY;
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
     throw new Error(
-      "Missing Supabase env vars: NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY",
+      "Variables environements manquant",
     );
   }
   // With Fluid compute, don't put this client in a global environment
@@ -45,15 +45,34 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
 
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  // Public routes that don't require authentication
+  const publicRoutes = ["/auth", "/signIn", "/signUp", "/"];
+  const isPublicRoute = publicRoutes.some((route) =>
+    request.nextUrl.pathname.startsWith(route)
+  );
+
+  if (!user && !isPublicRoute) {
+    // No user, redirect to login page
     const url = request.nextUrl.clone();
-    url.pathname = "/auth/login";
+    url.pathname = "/auth/signIn";
     return NextResponse.redirect(url);
+  }
+
+  // If user is authenticated and trying to access admin routes
+  if (user && request.nextUrl.pathname.startsWith("/admin")) {
+    // Check if user is approved
+    const { data: profile } = await supabase
+      .from("users")
+      .select("is_approved")
+      .eq("id", user.sub)
+      .maybeSingle();
+
+    if (!profile?.is_approved) {
+      // User exists but not approved, redirect to pending page
+      const url = request.nextUrl.clone();
+      url.pathname = "/auth/pending";
+      return NextResponse.redirect(url);
+    }
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.

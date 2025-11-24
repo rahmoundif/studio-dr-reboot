@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "check": "biome check --write",
+    "worker": "bun scripts/send-mail-worker.js",
+    "test:email": "bun scripts/test-send-email.js",
     "format": "biome format --write",
     "lint": "biome lint --write"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
+    "@react-email/components": "^1.0.1",
     "@supabase/ssr": "^0.7.0",
     "@supabase/supabase-js": "^2.83.0",
     "class-variance-authority": "^0.7.1",
@@ -20,8 +23,9 @@
     "next": "16.0.3",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-email": "^5.0.5",
     "react-toastify": "^11.0.5",
-    "resend": "^6.4.2",
+    "resend": "^6.5.2",
     "tailwind-merge": "^3.4.0",
     "zod": "^4.1.12"
   },

@@ -1,5 +1,5 @@
 "use client";
-import { LogoutButton } from "@/app/auth/_components/logout-button";
+import { LogoutButton } from "@/app/auth/_components/_buttons/signOut";
 
 export default function AdminNav() {
   return (

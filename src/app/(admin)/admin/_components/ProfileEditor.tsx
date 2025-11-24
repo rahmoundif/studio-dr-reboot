@@ -60,9 +60,9 @@ export default function ProfileEditor() {
       .update({
         firstname: profile.firstname,
         lastname: profile.lastname,
-        bio_fr: profile.bio_fr,
-        bio_en: profile.bio_en,
+        bio: profile.bio,
         avatar_url: profile.avatar_url,
+        pseudo: profile.pseudo,
       })
       .eq("id", profile.id);
 
@@ -96,17 +96,24 @@ export default function ProfileEditor() {
           value={profile.lastname || ""}
           onChange={(e) => setProfile({ ...profile, lastname: e.target.value })}
         />
-        <textarea
+        <input
           className="border p-2 rounded bg-gray-700 text-white"
-          placeholder="Bio FR"
-          value={profile.bio_fr || ""}
-          onChange={(e) => setProfile({ ...profile, bio_fr: e.target.value })}
+          placeholder="Pseudo (optionnel)"
+          value={profile.pseudo || ""}
+          onChange={(e) => setProfile({ ...profile, pseudo: e.target.value })}
         />
         <textarea
           className="border p-2 rounded bg-gray-700 text-white"
-          placeholder="Bio EN"
-          value={profile.bio_en || ""}
-          onChange={(e) => setProfile({ ...profile, bio_en: e.target.value })}
+          placeholder="Bio"
+          rows={4}
+          value={profile.bio || ""}
+          onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
+        />
+        <input
+          className="border p-2 rounded bg-gray-700 text-white"
+          placeholder="Avatar URL"
+          value={profile.avatar_url || ""}
+          onChange={(e) => setProfile({ ...profile, avatar_url: e.target.value })}
         />
       </div>
 

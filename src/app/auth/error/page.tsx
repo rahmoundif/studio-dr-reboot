@@ -1,34 +1,42 @@
 import Link from "next/link";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-export default function AuthErrorPage() {
+export default function AuthErrorPage({ className }: { className?: string }) {
   return (
-    <main title="Lien invalide ou expiré">
-      <p className="text-gray-300 mb-4 text-center leading-relaxed">
-        Le lien que vous avez utilisé n’est plus valide.
-        <br />
-        Il peut avoir expiré, déjà été utilisé, ou être incomplet.
-      </p>
+    <main className={cn("max-w-md mx-auto p-6", className)} title="Lien invalide ou expiré">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl">Lien invalide ou expiré</CardTitle>
+          <CardDescription>
+            Le lien que vous avez utilisé n’est plus valide. Il peut avoir
+            expiré, déjà été utilisé, ou être incomplet.
+          </CardDescription>
+        </CardHeader>
 
-      <Link
-        href="/auth/signUp"
-        className="block w-full text-center bg-blue-600 hover:bg-blue-700 py-2 rounded-lg mt-4"
-      >
-        Créer un compte
-      </Link>
+        <CardContent>
+          <div className="flex flex-col gap-3">
+            <Button asChild className="w-full">
+              <Link href="/auth/signUp">Créer un compte</Link>
+            </Button>
 
-      <Link
-        href="/auth/login"
-        className="block w-full text-center bg-gray-700 hover:bg-gray-600 py-2 rounded-lg mt-3"
-      >
-        Se connecter
-      </Link>
+            <Button asChild variant="outline" className="w-full">
+              <Link href="/auth/login">Se connecter</Link>
+            </Button>
 
-      <Link
-        href="/"
-        className="block w-full text-center text-gray-300 hover:underline mt-3"
-      >
-        Retour à l’accueil
-      </Link>
+            <Button asChild variant="ghost" className="w-full">
+              <Link href="/">Retour à l’accueil</Link>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </main>
   );
 }
