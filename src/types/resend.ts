@@ -1,5 +1,5 @@
-export interface emailType{
-    to : string,
-    subject : string,
-    html : string,
+export interface emailType {
+  to: string;
+  subject: string;
+  html: string;
 }

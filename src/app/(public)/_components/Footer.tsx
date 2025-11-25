@@ -2,48 +2,14 @@
 
 // Link removed — using programmatic navigation for admin access
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { createClient } from "@/lib/client";
 
 export default function Footer() {
   const router = useRouter();
-  const [checking, setChecking] = useState(false);
 
   async function handleAdminAccess(e: React.MouseEvent) {
     e.preventDefault();
-    if (checking) return;
-    setChecking(true);
-
-    try {
-      const supabase = createClient();
-      const { data: userData } = await supabase.auth.getUser();
-      const user = userData?.user;
-
-      if (!user) {
-        router.push("/auth/signIn");
-        return;
-      }
-
-      // Check approval in users table
-      const { data: profile, error } = await supabase
-        .from("users")
-        .select("is_approved")
-        .eq("id", user.id)
-        .maybeSingle();
-
-      if (error || !profile?.is_approved ||!profile) {
-        router.push("/auth/pending");
-        return;
-      }
-
-      // approved
-      router.push("/admin");
-    } catch (err) {
-      console.error("Error checking admin access", err);
-      router.push("/auth/signIn");
-    } finally {
-      setChecking(false);
-    }
+    // Just navigate to /admin - middleware will handle approval check
+    router.push("/admin");
   }
   return (
     <footer className="bg-gray-900 text-gray-300 py-10 mt-16">
@@ -124,9 +90,8 @@ export default function Footer() {
             href="/admin"
             onClick={handleAdminAccess}
             className="text-sm text-gray-400 hover:text-white transition cursor-pointer"
-            aria-disabled={checking}
           >
-            {checking ? "Vérification…" : "Espace administrateur"}
+            Espace administrateur
           </a>
         </section>
       </main>

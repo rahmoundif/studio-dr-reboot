@@ -1,26 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/client";
+// import { useEffect, useState } from "react";
+// import { createClient } from "@/lib/client";
 
-export default function AdminDashboard() {
-  const [count, setCount] = useState(0);
-  const supabase = createClient();
+export default function Admin() {
+  // const [count, setCount] = useState(0);
+  // const supabase = createClient();
 
-  useEffect(() => {
-    const fetchSections = async () => {
-      const { data, error } = await supabase
-        .from("content_sections")
-        .select("id");
+  // useEffect(() => {
+  //   const fetchSections = async () => {
+  //     const { data, error } = await supabase
+  //       .from("content_sections")
+  //       .select("id");
 
-      if (!error) {
-        setCount(data?.length ?? 0);
-      }
-    };
+  //     if (!error) {
+  //       setCount(data?.length ?? 0);
+  //     }
+  //   };
 
-    fetchSections();
-  }, [supabase]);
+  //   fetchSections();
+  // }, [supabase]);
 
   return (
     <section>
@@ -28,7 +28,7 @@ export default function AdminDashboard() {
 
       <div className="bg-gray-800 p-4 rounded shadow text-center">
         <p className="text-lg">
-          Nombre de sections : <b>{count}</b>
+          Nombre de sections : <b>2</b>
         </p>
       </div>
 

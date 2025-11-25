@@ -1,4 +1,3 @@
-
 import { createClient } from "./../src/lib/server";
 import { Resend } from "resend";
 
@@ -87,7 +86,11 @@ async function processPending() {
       } catch (err) {
         console.error("Error sending job", job.id, err);
         const lastError =
-          err instanceof Error ? err.message : typeof err === "string" ? err : String(err);
+          err instanceof Error
+            ? err.message
+            : typeof err === "string"
+              ? err
+              : String(err);
         await supabase
           .from("mail_queue")
           .update({

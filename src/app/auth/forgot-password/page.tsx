@@ -13,7 +13,11 @@ import { createClient } from "@/lib/client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export default function ForgotPasswordPage({ className }: { className?: string }) {
+export default function ForgotPasswordPage({
+  className,
+}: {
+  className?: string;
+}) {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
@@ -29,9 +33,12 @@ export default function ForgotPasswordPage({ className }: { className?: string }
       const supabase = createClient();
 
       // Ask Supabase to send a password reset email
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
-      });
+      const { error } = await supabase.auth.resetPasswordForEmail(
+        email.trim(),
+        {
+          redirectTo: `${window.location.origin}/auth/reset-password`,
+        },
+      );
 
       if (error) {
         throw error;
@@ -79,7 +86,10 @@ export default function ForgotPasswordPage({ className }: { className?: string }
             </Button>
 
             <div className="text-sm text-center">
-              <Link href="/auth/login" className="text-primary hover:underline">
+              <Link
+                href="/auth/signIn"
+                className="text-primary hover:underline"
+              >
                 Retour à la connexion
               </Link>
             </div>

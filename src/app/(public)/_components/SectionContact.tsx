@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-
 export default function SectionContact() {
   const [loading, setLoading] = useState(false);
 

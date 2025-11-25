@@ -6,9 +6,7 @@ export function createClient() {
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error(
-      "Variables environements manquant",
-    );
+    throw new Error("Variables environements manquant");
   }
 
   return createBrowserClient(supabaseUrl, supabaseAnonKey);

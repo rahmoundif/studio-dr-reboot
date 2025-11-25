@@ -31,11 +31,11 @@ export interface Step {
   step_number?: number;
 }
 
-export interface UserType{
-user: string | null;
+export interface UserType {
+  user: string | null;
 }
 
-export interface providerType { 
-provider: "github" | "google" | "discord";
-className?: string
+export interface providerType {
+  provider: "github" | "google" | "discord";
+  className?: string;
 }

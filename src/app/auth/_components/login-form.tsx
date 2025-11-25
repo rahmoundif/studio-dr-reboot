@@ -112,7 +112,11 @@ export function LoginForm({
 
                 if (error) {
                   console.error(error);
-                  setError(error.message ?? "Une erreur est survenue");
+                  if (error.message.includes("Invalid login credentials")) {
+                    setError("Email ou mot de passe incorrect.");
+                  } else {
+                    setError(error.message ?? "Une erreur est survenue");
+                  }
                 } else if (data?.user) {
                   // After successful sign in, ensure the user's profile is approved
                   try {
@@ -128,11 +132,15 @@ export function LoginForm({
                       console.error(profileError);
                       // If we can't read the profile, fallback to admin but surface a message
                       setError(
-                        "Impossible de vérifier l'état du compte. Réessayez plus tard."
+                        "Impossible de vérifier l'état du compte. Réessayez plus tard.",
                       );
                     } else if (!profile?.is_approved) {
                       // Not approved -> send to pending page
-                      router.push("/auth/pending");
+                      router.push(
+                        `/auth/pending?id=${data.user.id}&email=${encodeURIComponent(
+                          email,
+                        )}`,
+                      );
                     } else {
                       // Approved -> proceed to admin
                       router.push("/admin");
@@ -143,7 +151,9 @@ export function LoginForm({
                   }
                 } else {
                   // Unexpected response
-                  setError("Impossible de se connecter. Réessayez.");
+                  setError(
+                    "Impossible de se connecter. Veuillez vérifier vos identifiants.",
+                  );
                 }
               } catch (err: unknown) {
                 setError(err instanceof Error ? err.message : String(err));
@@ -189,11 +199,14 @@ export function LoginForm({
               />
             </label> */}
 
-            {/* <div className="text-sm text-right">
-              <Link href="/auth/forgot-password" className="text-primary hover:underline">
+            <div className="text-sm text-right">
+              <Link
+                href="/auth/forgot-password"
+                className="text-primary hover:underline"
+              >
                 Mot de passe oublié ?
               </Link>
-            </div> */}
+            </div>
 
             <Button
               type="submit"

@@ -11,9 +11,7 @@ export async function updateSession(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 
   if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error(
-      "Variables environements manquant",
-    );
+    throw new Error("Variables environements manquant");
   }
   // With Fluid compute, don't put this client in a global environment
   // variable. Always create a new one on each request.
@@ -46,10 +44,10 @@ export async function updateSession(request: NextRequest) {
   const user = data?.claims;
 
   // Public routes that don't require authentication
-  const publicRoutes = ["/auth", "/signIn", "/signUp", "/"];
-  const isPublicRoute = publicRoutes.some((route) =>
-    request.nextUrl.pathname.startsWith(route)
-  );
+  const publicRoutes = ["/auth/", "/signIn", "/signUp"];
+  const isPublicRoute =
+    request.nextUrl.pathname === "/" ||
+    publicRoutes.some((route) => request.nextUrl.pathname.startsWith(route));
 
   if (!user && !isPublicRoute) {
     // No user, redirect to login page
@@ -58,16 +56,47 @@ export async function updateSession(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // If user is authenticated and trying to access admin routes
-  if (user && request.nextUrl.pathname.startsWith("/admin")) {
+  // If user is authenticated and trying to access public auth routes
+  // BUT exclude /auth/pending to avoid redirect loops
+  if (
+    user &&
+    isPublicRoute &&
+    request.nextUrl.pathname !== "/" &&
+    !request.nextUrl.pathname.startsWith("/auth/pending")
+  ) {
     // Check if user is approved
     const { data: profile } = await supabase
-      .from("users")
+      .from("profiles")
       .select("is_approved")
       .eq("id", user.sub)
       .maybeSingle();
 
-    if (!profile?.is_approved) {
+    const url = request.nextUrl.clone();
+    if (profile?.is_approved) {
+      url.pathname = "/admin";
+    } else {
+      url.pathname = "/auth/pending";
+    }
+    return NextResponse.redirect(url);
+  }
+
+  // If user is authenticated and trying to access admin routes
+  if (user && request.nextUrl.pathname.startsWith("/admin")) {
+    // Check if user is approved
+    const { data: profile, error } = await supabase
+      .from("profiles")
+      .select("is_approved")
+      .eq("id", user.sub)
+      .maybeSingle();
+
+    // If there's an error or no profile found, allow access (fail open)
+    // This prevents redirect loops when profile doesn't exist yet
+    if (error) {
+      return supabaseResponse;
+    }
+
+    // Only redirect if we found a profile AND it's not approved
+    if (profile && !profile.is_approved) {
       // User exists but not approved, redirect to pending page
       const url = request.nextUrl.clone();
       url.pathname = "/auth/pending";

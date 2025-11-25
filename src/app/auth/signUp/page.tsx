@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,7 @@ export default function SignUpPage() {
   const router = useRouter();
 
   const [errors, setErrors] = useState<string[]>([]); // erreurs de validation / signup
-  const [message, setMessage] = useState<string | null>(null); // message de succès
+  const [message, _setMessage] = useState<string | null>(null); // message de succès
   const [isLoading, setIsLoading] = useState(false);
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
@@ -38,7 +38,7 @@ export default function SignUpPage() {
 
     if (password.length < 6) {
       validationErrors.push(
-        "Le mot de passe doit contenir au moins 6 caractères"
+        "Le mot de passe doit contenir au moins 6 caractères",
       );
     }
 
@@ -69,7 +69,11 @@ export default function SignUpPage() {
       });
 
       if (signupError) {
-        setErrors([signupError.message]);
+        if (signupError.message.includes("User already registered")) {
+          setErrors(["Un compte existe déjà avec cet email."]);
+        } else {
+          setErrors([signupError.message]);
+        }
         return;
       }
 
@@ -95,7 +99,11 @@ export default function SignUpPage() {
             console.error("Could not create profile", err);
           }
         }
-        router.push("/auth/pending");
+        router.push(
+          `/auth/pending?id=${user?.id}&email=${encodeURIComponent(
+            email,
+          )}&source=signup`,
+        );
       }
     } catch {
       setErrors(["Une erreur inattendue s'est produite"]);
@@ -180,7 +188,7 @@ export default function SignUpPage() {
               <div className="mt-4 text-center text-sm">
                 Déjà un compte ?{" "}
                 <Link
-                  href="/auth/login"
+                  href="/auth/signIn"
                   className="underline underline-offset-4"
                 >
                   Se connecter

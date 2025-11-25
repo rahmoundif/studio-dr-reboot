@@ -113,7 +113,9 @@ export default function ProfileEditor() {
           className="border p-2 rounded bg-gray-700 text-white"
           placeholder="Avatar URL"
           value={profile.avatar_url || ""}
-          onChange={(e) => setProfile({ ...profile, avatar_url: e.target.value })}
+          onChange={(e) =>
+            setProfile({ ...profile, avatar_url: e.target.value })
+          }
         />
       </div>
 

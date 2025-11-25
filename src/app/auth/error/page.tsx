@@ -11,7 +11,10 @@ import { cn } from "@/lib/utils";
 
 export default function AuthErrorPage({ className }: { className?: string }) {
   return (
-    <main className={cn("max-w-md mx-auto p-6", className)} title="Lien invalide ou expiré">
+    <main
+      className={cn("max-w-md mx-auto p-6", className)}
+      title="Lien invalide ou expiré"
+    >
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl">Lien invalide ou expiré</CardTitle>
